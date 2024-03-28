@@ -1,10 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { useSelector } from "react-redux";
 
+const token = localStorage.getItem('token'); 
 export const fetchdata = createAsyncThunk(
     'classesarray/fetchdata',
     async () => {
-        const response = await fetch("https:3000/getdata");
-        const data = response.json();
+        const response = await fetch("http://127.0.0.1:8000/studentclasses/",{
+            method:"GET",
+            headers:{
+               'Authorization': `Token ${token}`,
+               'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log('this is the data we fetched',data);
         return data;
     }
 );
@@ -34,5 +43,7 @@ const classslice = createSlice({
         })
     }
 })
+
+// export { fetchdata };
 
 export default classslice.reducer;

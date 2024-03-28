@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 // import { turnon,turnoff } from "../reducers/drawerinfo";
-import {useSelector } from "react-redux";
+import { useSelector} from "react-redux";
+// import { fetchdata } from "../reducers/classesinfo";
 // import { UseSelector } from "react-redux";
 
 const Navbar = () => {
+  // const dispatch = useDispatch();
+  const classes_array = useSelector((state) => state.classesarray);
+
   const drawer = useSelector((state) => state.drawer.value);
+
+  useEffect(()=>{
+    console.log(classes_array);
+  },[classes_array]);
 
   const classes_enrolled = [
     {

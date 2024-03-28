@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import './Login.css';  // Make sure the path is correct
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-    // Removed useEffect if it's not being used, or complete the logic inside it
+const SigninS = () => {
     const navigate = useNavigate();
-    // useEffect(()=>{
-        
-
-    // },[])
-
     const [form, setForm] = useState({
         name: '',
         password: '',
+        email: ''
     });
 
     const handleChange = (event) => {
@@ -24,11 +18,14 @@ const Login = () => {
         event.preventDefault();
         // Handle form submission logic here
         const formData = {
-            username: form.name,  // example of form field
-            password: form.password,  // example of form field
+            user:{
+                username: form.name,  // example of form field
+                password: form.password,  // example of form field
+                email: form.email
+            }
         };
     
-        const response = await fetch("http://127.0.0.1:8000/login/", {
+        const response = await fetch("http://127.0.0.1:8000/registerstudent/", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',  // Specify the content type as JSON
@@ -40,32 +37,39 @@ const Login = () => {
         console.log(data);
 
         if (response.ok) {
-            localStorage.setItem('token', data.token);
-            navigate('/');
+            // localStorage.setItem('token', data.token);
+            navigate('/login');
         } else {
             // Handle errors, e.g., show an error message
-            console.error('Login failed:', data);
+            console.error('Signin failed:', data);
         }
     };
 
-    return (
-        <div>
-            <span>LOGIN</span>
+  return (
+     <div>
+            <span>SIGNUP STUDENT</span>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">
                     Username
                     <input type="text" name="name" onChange={handleChange} value={form.name} />
                 </label>
+
+                <label htmlFor="email">
+                    Email
+                    <input type="email" name="email" onChange={handleChange} value={form.email} />
+                </label>
+
                 <label htmlFor="password">
                     Password
                     <input type="password" name="password" onChange={handleChange} value={form.password} />
                 </label>
+                
                 <button type="submit">
-                    LOGIN
+                    SIGNUP
                 </button>
             </form>
         </div>
-    );
+  )
 }
 
-export default Login;
+export default SigninS
