@@ -1,0 +1,20 @@
+.classinfo-wrapper{
+    height: 20rem;
+    width: calc(100vw - 18rem);
+    background-color: #f0f0f0;
+    border-radius: 1rem;
+    display: flex;
+    align-items: end;
+    justify-content: start;
+    /* padding-left:1rem; */
+    padding-bottom: 1rem;
+}
+.classinfo-content{
+    padding-left: 1rem;
+}
+.classinfo-content > div{
+    text-align: left;
+}
+.classinfo-class{
+    font-size: 1.875rem;
+}

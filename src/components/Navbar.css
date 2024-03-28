@@ -1,0 +1,36 @@
+.Navbar-main{
+    width:14.75rem;
+    height:calc(100vh - 5.5rem);
+    border-right: 0.0625rem solid #e0e0e0;
+    position:fixed;
+    padding-top: 2rem;
+}
+.Navbar-content > div{
+    font-size: 0.9rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    line-height: 2rem;
+}
+.Navbar-dynamic-block{
+    display: flex;
+    align-items: center;
+    padding-top:1.2rem;
+    padding-left:1.2rem;
+    padding-right:1.2rem;
+}
+.Navbar-dynamic-details{
+    font-size: 0.9rem;
+    padding-left: 1rem;
+    text-align: left;
+}
+.Navbar-dynamic-profile{
+    height:1.9rem;
+    width:1.9rem;
+    border-radius:50%;
+    background-color: #e0e0e0;
+}
+.Navbar-dynamic-content{
+    font-size: 0.9rem;
+    padding-top: 1rem;
+    border-top: 0.0625rem solid #e0e0e0;
+}
