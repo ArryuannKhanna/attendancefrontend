@@ -53,12 +53,12 @@ const Navbar = () => {
         { drawer?
         (<div className="Navbar-dynamic-content">
               CLASSES
-              {classes_enrolled.map((item,index)=>(
+              {classes_array.data.map((item,index)=>(
                 <div key = {index} className="Navbar-dynamic-block">
                   <div className="Navbar-dynamic-profile"></div>
                   <div className="Navbar-dynamic-details">
                      <div className="Navbar-dynamic-name">{item.name}</div>
-                     <div className="Navbar-dynamic-code">{item.teacher}</div>
+                     <div className="Navbar-dynamic-code">{item.host_id.user.username}</div>
                   </div>
                   </div>           
               ))}

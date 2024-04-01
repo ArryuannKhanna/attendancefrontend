@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import { useSelector } from "react-redux";
 
-const token = localStorage.getItem('token'); 
+// const token = localStorage.getItem('token'); 
+
 export const fetchdata = createAsyncThunk(
     'classesarray/fetchdata',
     async () => {
+        const token = localStorage.getItem('token'); 
         const response = await fetch("http://127.0.0.1:8000/studentclasses/",{
             method:"GET",
             headers:{
@@ -14,6 +16,7 @@ export const fetchdata = createAsyncThunk(
         });
         const data = await response.json();
         console.log('this is the data we fetched',data);
+        // console.log('this is the token we fetched',token);
         return data;
     }
 );

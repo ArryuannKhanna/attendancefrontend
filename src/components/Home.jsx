@@ -1,7 +1,9 @@
 import React from 'react';
 import './Home.css';
+import { useSelector} from "react-redux";
 
 const Home = () => {
+  const classes_array = useSelector((state) => state.classesarray);
 
   const classes_enrolled = [
     {
@@ -27,12 +29,12 @@ const Home = () => {
   return (
     <div className='Home-wrapper'>
       <div className="Home-grid">
-        {classes_enrolled.map((item,index)=>(
+        {classes_array.data.map((item,index)=>(
           <div key={index} className="grid-item">
             <div className="grid-upper">
               <div className='grid-course-name'>{item.name}</div>
-              <div className='grid-course-code'>{item.code}</div>
-              <div className='grid-course-teacher'>{item.teacher}</div>
+              <div className='grid-course-code'>{item.course_code}</div>
+              <div className='grid-course-teacher'>{item.host_id.user.username}</div>
             </div>
           
         </div>
