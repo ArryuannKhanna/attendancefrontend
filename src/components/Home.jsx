@@ -1,32 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchdata } from "../reducers/classesinfo";
 
 const Home = () => {
-  const classes_array = useSelector((state) => state.classesarray);
+  const dispatch = useDispatch();
+  const classesArray = useSelector((state) => state.classesarray);
+  console.log('classesArray:', classesArray); // Add this line for debugging
+  const userType = localStorage.getItem('type');
   const [classCode, setClassCode] = useState('');
 
-  const classes_enrolled = [
-    {
-      name: "English",
-      code: "xyz123",
-      teacher: "Mr Sandeep"
-    },
-    {
-      name: "Punjabi",
-      code: "127ff3",
-      teacher: "Mr Purania Singh Jathani"
-    },
-    {
-      name: "Science",
-      code: "12uff3",
-      teacher: "Mr Jay Singh Shah"
-    },
-    {
-      name: "German",
-      teacher: "Mr Jayash"
-    },
-  ];
+  useEffect(() => {
+    dispatch(fetchdata()); // Dispatch the fetchdata thunk action when the component mounts
+  }, [dispatch]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Here, you can send a request to the backend with the class code
@@ -52,15 +39,17 @@ const Home = () => {
               <button type="submit" >Submit</button>
             </div>
           </div>
-          {classes_array.data.map((item, index) => (
-            <div key={index} className="grid-item">
-              <div className="grid-upper">
-                <div className='grid-course-name'>{item.name}</div>
-                <div className='grid-course-code'>{item.course_code}</div>
-                <div className='grid-course-teacher'>{item.host_id.user.username}</div>
+          {classesArray.data && Array.isArray(classesArray.data) && classesArray.data.length > 0 && (
+            classesArray.data.map((item, index) => (
+              <div key={index} className="grid-item">
+                <div className="grid-upper">
+                  <div className='grid-course-name'>{item.name}</div>
+                  <div className='grid-course-code'>{item.course_code}</div>
+                  <div className='grid-course-teacher'>{userType === 'student' ? item.host_id.user.username : ''}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </form>
     </div>

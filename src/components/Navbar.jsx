@@ -1,71 +1,43 @@
 import React, { useEffect } from "react";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
-// import { turnon,turnoff } from "../reducers/drawerinfo";
-import { useSelector} from "react-redux";
-// import { fetchdata } from "../reducers/classesinfo";
-// import { UseSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  // const dispatch = useDispatch();
-  const classes_array = useSelector((state) => state.classesarray);
-
+  const classesArray = useSelector((state) => state.classesarray);
   const drawer = useSelector((state) => state.drawer.value);
+  const userType = localStorage.getItem('type');
 
-  useEffect(()=>{
-    console.log(classes_array);
-  },[classes_array]);
-
-  const classes_enrolled = [
-    {
-      name: "English",
-      code: "xyz123",
-      teacher: "Mr Sandeep"
-    },
-    {
-      name: "Punjabi",
-      code: "127ff3",
-      teacher: "Mr Purania Singh Jathani"
-    },
-    {
-      name: "Science",
-      code: "12uff3",
-      teacher: "Mr Jay Singh Shah"
-    },
-    {
-      name: "German",
-      teacher: "Mr Jayash"
-    },
-  ]
+  useEffect(() => {
+    console.log(classesArray);
+  }, [classesArray]);
 
   return (
-    <>
-      <div className="Navbar-main">
-        <div className="Navbar-content">
-          <div className="Navbar-Home">
-            <NavLink to="/">HOME</NavLink>
-          </div>
-          <div className="Navbar-Schedule">
-            <NavLink to="/schedule">SCHEDULE</NavLink>
-          </div>
-          <div className="Navbar-Chat">CHAT</div>
+    <div className="Navbar-main">
+      <div className="Navbar-content">
+        <div className="Navbar-Home">
+          <NavLink to="/">HOME</NavLink>
         </div>
-        { drawer?
-        (<div className="Navbar-dynamic-content">
-              CLASSES
-              {classes_array.data.map((item,index)=>(
-                <div key = {index} className="Navbar-dynamic-block">
-                  <div className="Navbar-dynamic-profile"></div>
-                  <div className="Navbar-dynamic-details">
-                     <div className="Navbar-dynamic-name">{item.name}</div>
-                     <div className="Navbar-dynamic-code">{item.host_id.user.username}</div>
-                  </div>
-                  </div>           
-              ))}
-        </div>):null
-        }
-      </div>           
-    </>
+        <div className="Navbar-Schedule">
+          <NavLink to="/schedule">SCHEDULE</NavLink>
+        </div>
+        <div className="Navbar-Chat">CHAT</div>
+      </div>
+      {drawer && (
+        <div className="Navbar-dynamic-content">
+          CLASSES
+          {classesArray.data && Array.isArray(classesArray.data) && classesArray.data.map((item, index) => (
+            <div key={index} className="Navbar-dynamic-block">
+              <div className="Navbar-dynamic-profile"></div>
+              <div className="Navbar-dynamic-details">
+                <div className="Navbar-dynamic-name">{item.name}</div>
+                <div className="Navbar-dynamic-code">{userType === 'student' ? item.host_id.user.username : ''}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
