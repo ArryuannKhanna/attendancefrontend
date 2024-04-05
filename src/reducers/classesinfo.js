@@ -7,19 +7,29 @@ export const fetchdata = createAsyncThunk(
     'classesarray/fetchdata',
     async () => {
         const token = localStorage.getItem('token'); 
-        const response = await fetch("http://127.0.0.1:8000/studentclasses/",{
-            method:"GET",
-            headers:{
-               'Authorization': `Token ${token}`,
-               'Content-Type': 'application/json'
+        const response = await fetch("http://127.0.0.1:8000/studentclasses/", {
+            method: "GET",
+            headers: {
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json'
             }
         });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error("Not a JSON response");
+        }
+
         const data = await response.json();
-        console.log('this is the data we fetched',data);
-        // console.log('this is the token we fetched',token);
+        console.log('this is the data we fetched', data);
         return data;
     }
 );
+
 
 const classslice = createSlice({
     name: "classesarray",
