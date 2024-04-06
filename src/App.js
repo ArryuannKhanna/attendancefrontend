@@ -1,77 +1,133 @@
-import { createBrowserRouter,RouterProvider, Outlet } from 'react-router-dom';
-import './App.css';
-import { useEffect } from 'react';
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import "./App.css";
+import { useEffect } from "react";
 
-import Home from './components/Home';
-import Navbar from './components/Navbar';
-import Header from './components/Header';
-import Schedule from './components/Schedule';
-import Login from './components/Login';
-import Classinfo from './components/Classinfo';
-import SigninS from './components/SigninS';
-import SigninT from './components/SigninT';
+import Home from "./components/Home";
+import Navbar from "./components/Navbar";
+import Header from "./components/Header";
+import Schedule from "./components/Schedule";
+import Login from "./components/Login";
+import Classinfo from "./components/Classinfo";
+import SigninS from "./components/SigninS";
+import SigninT from "./components/SigninT";
+import ErrorP from "./components/ErrorP";
+
 import { fetchdata } from "./reducers/classesinfo";
-
-import { useLocation } from 'react-router-dom';
-import { turnon,turnoff } from "./reducers/drawerinfo";
-import { useDispatch,useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { turnon, turnoff } from "./reducers/drawerinfo";
+import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 // import { settoken } from './reducers/token';
 
 function App() {
-
-  const RequireAuth = ({ children }) => {
+  const StudentAccessLevel = ({ children }) => {
     const location = useLocation();
-    const token = localStorage.getItem('token');
-    // const dispatch_t = useDispatch();
-    
-    // useEffect(()=>{
-    //   dispatch_t(settoken(token));
-    // },[dispatch_t,token])
-  
-    if (!token) {
-      return <Navigate to="/login" state={{ from: location }} replace />;
+    const type = localStorage.getItem("type");
+
+    if (type !== "Student") {
+      return (
+        <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
+      );
     }
-  
+    return children;
+  };
+  const TeacherAccessLevel = ({ children }) => {
+    const location = useLocation();
+    const type = localStorage.getItem("type");
+
+    if (type !== "Teacher") {
+      return (
+        <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
+      );
+    }
     return children;
   };
 
-  const Layout = () => {
-    // const navigate = useNavigate(); 
+  const RequireAuth = ({ children }) => {
+    const location = useLocation();
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return <Navigate to="/login" state={{ from: location }} replace />;
+    }
+
+    return children;
+  };
+
+  const LayoutTeacher = () => {
     const dispatch = useDispatch();
-    // const dispatch = useDispatch();
-    // const drawer = useSelector((state) => state.drawer.value);
     const classes_array = useSelector((state) => state.classesarray);
     const location = useLocation();
 
-    useEffect(()=>{
-      if(location.pathname === '/schedule'){
+    useEffect(() => {
+      if (location.pathname === "/schedule") {
         dispatch(turnoff());
         // console.log(location);
         // console.log(drawer);
-      }
-      else{
+      } else {
         dispatch(turnon());
         // console.log(location);
         // console.log(drawer);
       }
-    },[location,dispatch]);
+    }, [location, dispatch]);
 
     useEffect(() => {
-      if(classes_array.status === 'idle'){
-        dispatch(fetchdata());}
-    },[dispatch,classes_array]);
+      if (classes_array.status === "idle") {
+        dispatch(fetchdata());
+      }
+    }, [dispatch, classes_array]);
 
-    return(
-    <div className="App">
-      <Header />
-      <Navbar />
-      <div className="Window-view-port">
-        <div className="Navbar-shadow"></div>
-        <div className="view-port-wrapper"><Outlet /> </div>
+    return (
+      <div className="App">
+        <Header />
+        <Navbar />
+        <div className="Window-view-port">
+          <div className="Navbar-shadow"></div>
+          <div className="view-port-wrapper">
+            <Outlet />
+          </div>
+        </div>
       </div>
-    </div>)
+    );
+  };
+
+  const Layout = () => {
+    // const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const classes_array = useSelector((state) => state.classesarray);
+    const location = useLocation();
+
+    useEffect(() => {
+      if (location.pathname === "/schedule") {
+        dispatch(turnoff());
+        // console.log(location);
+        // console.log(drawer);
+      } else {
+        dispatch(turnon());
+        // console.log(location);
+        // console.log(drawer);
+      }
+    }, [location, dispatch]);
+
+    useEffect(() => {
+      if (classes_array.status === "idle") {
+        dispatch(fetchdata());
+      }
+    }, [dispatch, classes_array]);
+
+    return (
+      <div className="App">
+        <Header />
+        <Navbar />
+        <div className="Window-view-port">
+          <div className="Navbar-shadow"></div>
+          <div className="view-port-wrapper">
+            <Outlet />{" "}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const router = createBrowserRouter([
@@ -79,47 +135,68 @@ function App() {
       path: "/",
       element: (
         <RequireAuth>
-          <Layout/>
+          <StudentAccessLevel>
+            <Layout />
+          </StudentAccessLevel>
         </RequireAuth>
       ),
-      children:
-      [{
-        path: "/",
-        element: <Home/>,
-      },
-      {
-        path: "/schedule",
-        element: <Schedule/>,
-      },
-      {
-        path: '/:classid',
-        element: <Classinfo/>,
-      },
-    ],
-      errorElement: <div>errrorr</div>
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/schedule",
+          element: <Schedule />,
+        },
+        {
+          path: "/:classid",
+          element: <Classinfo />,
+        },
+      ],
+      errorElement: <div>errrorr</div>,
     },
     {
-      path: '/login',
-      element: <Login/>
+      path: "/login",
+      element: <Login />,
     },
     {
-      path: '/signupS',
-      element: <SigninS/>
+      path: "/signupS",
+      element: <SigninS />,
     },
     {
-      path: '/signupT',
-      element: <SigninT/>
-    }
+      path: "/signupT",
+      element: <SigninT />,
+    },
+    {
+      path: "/Teacher",
+      element: (
+        <RequireAuth>
+          <TeacherAccessLevel>
+            <LayoutTeacher />
+          </TeacherAccessLevel>
+        </RequireAuth>
+      ),
+      children: [
+        {
+          path: "/Teacher",
+          element: <Home />,
+        },
+      ],
+    },
+    {
+      path: "/404_NOT_FOUND",
+      element: <ErrorP />,
+    },
     // {
     //   path: "/schedule",
     //   element: <Schedule/>,
     // },
   ]);
 
-  
   return (
     <>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </>
   );
 }

@@ -41,13 +41,15 @@
 .Header-main-right :nth-child(3),.Header-main-right :nth-child(4){
     margin-left: 1.5rem;
 }
-.Header-main-right :nth-child(1){
+.Header-main-right :nth-child(1),.Header-main-right :nth-child(3){
     cursor: pointer;
 }
 .join-form{
     /* width:100px;
     height:100px; */
-    background-color: red;
+    background-color: white;
+    border: 0.0625rem solid #e0e0e0;
+    padding: 1.5rem;
     top:105%;
     right:6rem;
     position: absolute;

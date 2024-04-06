@@ -41,7 +41,12 @@ const Login = () => {
 
         if (response.ok) {
             localStorage.setItem('token', data.token);
-            navigate('/');
+            localStorage.setItem('type',data.type);
+            if(data.type === 'Teacher'){
+                navigate('/teacher');
+            }
+            else
+             navigate('/');
         } else {
             // Handle errors, e.g., show an error message
             console.error('Login failed:', data);

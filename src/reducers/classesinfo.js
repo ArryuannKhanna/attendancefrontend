@@ -7,7 +7,15 @@ export const fetchdata = createAsyncThunk(
     'classesarray/fetchdata',
     async () => {
         const token = localStorage.getItem('token'); 
-        const response = await fetch("http://127.0.0.1:8000/studentclasses/", {
+        const type = localStorage.getItem('type');
+        let fetch_point = '';
+        if(type === 'Student'){
+            fetch_point = "http://127.0.0.1:8000/studentclasses/";
+        }
+        else{
+            fetch_point = "http://127.0.0.1:8000/teacherclasses/"
+        }
+        const response = await fetch(fetch_point, {
             method: "GET",
             headers: {
                 'Authorization': `Token ${token}`,
