@@ -1,14 +1,19 @@
-.classinfo-wrapper{
+.classinfo-wrapper {
     height: 20rem;
     width: calc(100vw - 18rem);
     background-color: #f0f0f0;
     border-radius: 1rem;
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     justify-content: start;
-    /* padding-left:1rem; */
     padding-bottom: 1rem;
+    margin-bottom: 1rem;
 }
+
+.info-sections {
+    display: flex;
+}
+
 .classinfo-content{
     padding-left: 1rem;
 }
@@ -17,4 +22,74 @@
 }
 .classinfo-class{
     font-size: 1.875rem;
+}
+.attendance {
+    height: 10rem; /* Adjusted to accommodate dynamic content */
+    width: calc(13vw - 2.4rem);
+    background-color: #f0f0f0;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column; /* Display content in a column layout */
+    align-items: flex-start; /* Align content to the start of the column */
+    justify-content: center; /* Center content vertically within the column */
+    text-align: left;
+    padding-left: 1rem; /* Adjusted for spacing */
+    margin-left: 1rem; /* Add margin to separate the two sections */
+    margin-top: 1rem;
+}
+
+
+.sessions {
+    margin-left: 2rem; 
+    margin-top: 1rem;
+    background-color: #f0f0f0;
+    border-radius: 2rem;
+    height: 20rem;
+    width: calc(70vw - 2.4rem);
+}
+
+.session {
+    font-size: 1.75rem;
+    padding-left: 1rem;
+    text-align: justify;
+    padding-top: 2rem;
+
+}
+
+.classes {
+    font-size: 1.25rem;
+    padding-left: 1rem;
+    text-align: justify;
+}
+
+.sessions table {
+    width: 100%;
+    border-collapse: collapse;
+    padding-left: 1rem;
+}
+
+.sessions th,
+.sessions td {
+    padding: 8px;
+    text-align: left;
+}
+
+.sessions th:first-child,
+.sessions td:first-child {
+    width: 10%; /* Adjust the width of the first column */
+}
+
+.sessions th:nth-child(2),
+.sessions td:nth-child(2) {
+    width: 30%; /* Adjust the width of the second column */
+}
+
+.sessions th:nth-child(3),
+.sessions td:nth-child(3) {
+    width: 30%; /* Adjust the width of the third column */
+}
+
+.sessions th:nth-child(4),
+.sessions td:nth-child(4) {
+    width: 30%; /* Adjust the width of the fourth column */
 }
