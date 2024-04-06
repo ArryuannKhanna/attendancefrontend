@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import './Login.css';  // Make sure the path is correct
 import { useNavigate } from 'react-router-dom';
+import { fetchdata } from "../reducers/classesinfo";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const classes_array = useSelector((state) => state.classesarray);
     // Removed useEffect if it's not being used, or complete the logic inside it
     const navigate = useNavigate();
     // useEffect(()=>{
@@ -42,6 +47,7 @@ const Login = () => {
         if (response.ok) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('type',data.type);
+            dispatch(fetchdata());
             if(data.type === 'Teacher'){
                 navigate('/teacher');
             }

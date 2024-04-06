@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Home.css';
 import { useSelector} from "react-redux";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const classes_array = useSelector((state) => state.classesarray);
-
+  useEffect(()=>{
+    if (sessionStorage.getItem("isReloaded") !== "true") {
+      sessionStorage.setItem("isReloaded", "true");
+      window.location.reload();
+  }
+  },[])
   const classes_enrolled = [
     {
       name: "English",
@@ -32,7 +38,7 @@ const Home = () => {
         {classes_array.data.map((item,index)=>(
           <div key={index} className="grid-item">
             <div className="grid-upper">
-              <div className='grid-course-name'>{item.name}</div>
+             <Link style={{textAlign:'left'}} to={`/${item.course_code}`}><div className='grid-course-name'>{item.name}</div></Link>
               <div className='grid-course-code'>{item.course_code}</div>
               <div className='grid-course-teacher'>{item.host_id.user.username}</div>
             </div>
