@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Classinfo.css';
+import { useParams } from 'react-router-dom';
 
 const Classinfo = () => {
+    const { classid } = useParams();
     const percentage = '80%';
     const total_classes = '10';
     const attended_classes = '8';
+
+    useEffect(() => {
+        const fetchData = async () => {
+            console.log("Fetching data for class ID:", classid);
+            const token = localStorage.getItem('token');
+            const response = await fetch(`http://127.0.0.1:8000/classroomsessions/${classid}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Token ${token}`,
+                    "Content-Type": "application/json"
+                },
+            });
+    
+            if (!response.ok) {
+                console.error(`The error is huge ${response.status}`);
+                return;
+            }
+    
+            const data = await response.json();
+            console.log(data);
+        };
+    
+        fetchData();
+    }, [classid]);  // Added classid as a dependency to useEffect
+    
 
     const sessions = [
         {
