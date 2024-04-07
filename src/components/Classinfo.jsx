@@ -12,9 +12,15 @@ const Classinfo = () => {
         course_name:'',
         course_code:'',
         teacher:''
-    })
+    });
 
-    useEffect(() => {
+    const [sessioninfo,setsessioninfo] = useState([]);
+    // const [presentinfo,setpresentinfo] = useState([]);
+    const [presentpercentage,setpresentpercentage] = useState(0);
+    const [totalclasses,settotalclasses] = useState(0);
+    const [attendedclasses,setattendedclasses] = useState(0);
+
+     useEffect(() => {
         const fetchInfo = async () => {
             const token = localStorage.getItem('token');
             const response = await fetch(`http://127.0.0.1:8000/classinfo/${classid}`, {
@@ -57,7 +63,30 @@ const Classinfo = () => {
             }
     
             const data = await response.json();
-            console.log(data);
+
+            if (Array.isArray(data)&& data.length > 0) {
+                let userid = data[0].user_info.id; // Assuming 'user_info' is directly under objects in 'data'
+                // console.log('this is the user id', userid);
+          
+                // If you need to update 'sessioninfo' based on 'userid'
+                let total_attendance = 0;
+                let total_sessions = 0;
+                const updatedSessionInfo = data.map(user => {
+                  const ispresent = user.students_present.includes(userid);
+                  ispresent? total_attendance+=1:total_attendance+=0;
+                  total_sessions+=1;
+                  return { ...user, 'present': ispresent };
+                });
+                settotalclasses(total_sessions);
+                setattendedclasses(total_attendance);
+                const val = total_attendance/total_sessions * 100;
+                setpresentpercentage(Math.round(val));
+                setsessioninfo(updatedSessionInfo);
+                // console.log('This is the updated',val);
+              }else
+              {
+                console.log('not an array');
+              }
         };
     
         fetchData();
@@ -100,13 +129,13 @@ const Classinfo = () => {
             <div className="info-sections">
                 <div className='attendance'>
                     <div className='classinfo-code'>
-                        <b>Attendance:</b> {percentage}
+                        <b>Attendance:</b> {presentpercentage}%
                     </div>
                     <div className='classinfo-code'>
-                        <b>Total classes:</b> {total_classes}
+                        <b>Total classes:</b> {totalclasses}
                     </div>
                     <div className='classinfo-code'>
-                        <b>Attended classes:</b> {attended_classes}
+                        <b>Attended classes:</b> {attendedclasses}
                     </div>
                 </div>
                 <div className='sessions'>
@@ -116,17 +145,18 @@ const Classinfo = () => {
                             <tr>
                                 <th>ID</th>
                                 <th>Date</th>
-                                <th>Time</th>
+                                {/* <th>Time</th> */}
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {sessions.map((session) => (
+                            {sessioninfo.map((session,index) => (
                                 <tr key={session.id}>
-                                    <td>{session.id}</td>
+                                    <td>{index+1}</td>
                                     <td>{session.date}</td>
-                                    <td>{session.time}</td>
+                                    {/* <td>{session.time}</td> */}
                                     <td>{session.present ? 'Present' : 'Absent'}</td>
+                                    {/* <td>Present</td> */}
                                 </tr>
                             ))}
                         </tbody>
