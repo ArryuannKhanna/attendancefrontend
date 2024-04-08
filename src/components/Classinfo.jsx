@@ -4,9 +4,6 @@ import { useParams } from 'react-router-dom';
 
 const Classinfo = () => {
     const { classid } = useParams();
-    const percentage = '80%';
-    const total_classes = '10';
-    const attended_classes = '8';
 
     const [classinfo,setclassinfo] = useState({
         course_name:'',
@@ -92,24 +89,6 @@ const Classinfo = () => {
         fetchData();
         fetchInfo();
     }, [classid]);  // Added classid as a dependency to useEffect
-    
-
-    const sessions = [
-        {
-            id: 1,
-            session: 'Session 1',
-            date: '2023-05-01',
-            time: '09:00 AM - 11:00 AM',
-            present: true
-        },
-        {
-            id: 2,
-            session: 'Session 2',
-            date: '2023-05-02',
-            time: '09:00 AM - 11:00 AM',
-            present: false
-        }
-    ];
 
     return (
         <>
