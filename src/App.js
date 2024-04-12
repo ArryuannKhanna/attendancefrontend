@@ -123,7 +123,7 @@ function App() {
         <div className="Window-view-port">
           <div className="Navbar-shadow"></div>
           <div className="view-port-wrapper">
-            <Outlet />{" "}
+            <Outlet />
           </div>
         </div>
       </div>
@@ -135,9 +135,9 @@ function App() {
       path: "/",
       element: (
         <RequireAuth>
-          <StudentAccessLevel>
+          {/* <StudentAccessLevel> */}
             <Layout />
-          </StudentAccessLevel>
+          {/* </StudentAccessLevel> */}
         </RequireAuth>
       ),
       children: [
@@ -172,16 +172,20 @@ function App() {
       path: "/Teacher",
       element: (
         <RequireAuth>
-          <TeacherAccessLevel>
+          {/* <TeacherAccessLevel> */}
             <LayoutTeacher />
-          </TeacherAccessLevel>
+          {/* </TeacherAccessLevel> */}
         </RequireAuth>
       ),
       children: [
         {
-          path: "/Teacher",
+          path: "",
           element: <Home />,
         },
+        {
+          path: ":classid",
+          element: <Classinfo />
+        }
       ],
     },
     {

@@ -49,7 +49,7 @@ const Login = () => {
             localStorage.setItem('type',data.type);
             dispatch(fetchdata());
             if(data.type === 'Teacher'){
-                navigate('/teacher');
+                navigate('/Teacher');
             }
             else
              navigate('/');

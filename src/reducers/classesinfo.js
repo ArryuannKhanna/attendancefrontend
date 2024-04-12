@@ -32,7 +32,7 @@ export const fetchdata = createAsyncThunk(
     }
 
     const data = await response.json();
-    console.log("this is the data we fetched", data);
+    // console.log("this is the data we fetched", data);
     return data;
   }
 );

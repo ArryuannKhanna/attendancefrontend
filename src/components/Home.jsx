@@ -4,6 +4,8 @@ import { useSelector} from "react-redux";
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+  const type = localStorage.getItem('type');
+
   const classes_array = useSelector((state) => state.classesarray);
   useEffect(()=>{
     if (sessionStorage.getItem("isReloaded") !== "true") {
@@ -38,7 +40,7 @@ const Home = () => {
         {classes_array.data.map((item,index)=>(
           <div key={index} className="grid-item">
             <div className="grid-upper">
-             <Link style={{textAlign:'left'}} to={`/${item.course_code}`}><div className='grid-course-name'>{item.name}</div></Link>
+             <Link style={{textAlign:'left'}} to={`${item.course_code}/`}><div className='grid-course-name'>{item.name}</div></Link>
               <div className='grid-course-code'>{item.course_code}</div>
               <div className='grid-course-teacher'>{item.host_id.user.username}</div>
             </div>
