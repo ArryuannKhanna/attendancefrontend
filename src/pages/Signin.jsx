@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-// import { Footer, Navbar } from "../components";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const Student = () => {
   const [name, setName] = useState("");
@@ -44,7 +45,7 @@ const Student = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Header />
       <div className="container my-3 py-3">
         <h1 className="text-center">Register</h1>
         <hr />
@@ -134,7 +135,7 @@ const Student = () => {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

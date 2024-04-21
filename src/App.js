@@ -4,12 +4,13 @@ import { useEffect } from "react";
 
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import Header from "./pages/Header";
+import Header from "./components/Header";
 import Schedule from "./pages/Schedule";
 import Login from "./pages/Login";
 import Classinfo from "./pages/Classinfo";
 import SigninS from "./pages/Signin";
 import ErrorP from "./pages/ErrorP";
+import LandingPage from "./pages/LandingPage";
 
 
 import { fetchdata } from "./reducers/classesinfo";
@@ -155,6 +156,10 @@ function App() {
         },
       ],
       errorElement: <div>errrorr</div>,
+    },
+    {
+      path: "/LandingPage",
+      element: <LandingPage />,
     },
     {
       path: "/login",

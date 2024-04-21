@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-// import { Footer, Navbar } from "../components";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const Login = () => {
   const [username, setusername] = useState("");
@@ -25,7 +26,7 @@ const Login = () => {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Header />
       <div className="container my-3 py-3">
         <h1 className="text-center">Login</h1>
         <hr />
@@ -60,7 +61,7 @@ const Login = () => {
               <div className="my-3">
                 <p>
                   New Here?{" "}
-                  <Link to="/register" className="text-decoration-underline text-info">
+                  <Link to="/Signup" className="text-decoration-underline text-info">
                     Register
                   </Link>{" "}
                 </p>
@@ -74,7 +75,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };
