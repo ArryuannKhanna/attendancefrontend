@@ -2,15 +2,15 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import "./App.css";
 import { useEffect } from "react";
 
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import Header from "./components/Header";
-import Schedule from "./components/Schedule";
-import Login from "./components/Login";
-import Classinfo from "./components/Classinfo";
-import SigninS from "./components/SigninS";
-import SigninT from "./components/SigninT";
-import ErrorP from "./components/ErrorP";
+import Header from "./pages/Header";
+import Schedule from "./pages/Schedule";
+import Login from "./pages/Login";
+import Classinfo from "./pages/Classinfo";
+import SigninS from "./pages/Signin";
+import ErrorP from "./pages/ErrorP";
+
 
 import { fetchdata } from "./reducers/classesinfo";
 import { useLocation } from "react-router-dom";
@@ -161,12 +161,8 @@ function App() {
       element: <Login />,
     },
     {
-      path: "/signupS",
+      path: "/signup",
       element: <SigninS />,
-    },
-    {
-      path: "/signupT",
-      element: <SigninT />,
     },
     {
       path: "/Teacher",
