@@ -8,7 +8,36 @@ import { useSelector} from "react-redux";
 
 const Navbar = () => {
   // const dispatch = useDispatch();
-  const classes_array = useSelector((state) => state.classesarray);
+  // const classes_array = useSelector((state) => state.classesarray);
+  const classes_array = {
+    data: [
+      {
+        name: "Yoga Class",
+        host_id: {
+          user: {
+            username: "yoga_master123"
+          }
+        }
+      },
+      {
+        name: "Pilates Workshop",
+        host_id: {
+          user: {
+            username: "pilates_pro456"
+          }
+        }
+      },
+      {
+        name: "Zumba Party",
+        host_id: {
+          user: {
+            username: "zumba_queen789"
+          }
+        }
+      }
+    ]
+  };
+  
 
   const drawer = useSelector((state) => state.drawer.value);
 
@@ -48,7 +77,7 @@ const Navbar = () => {
           <div className="Navbar-Schedule">
             <NavLink to="/schedule">SCHEDULE</NavLink>
           </div>
-          <div className="Navbar-Chat">CHAT</div>
+
         </div>
         { drawer?
         (<div className="Navbar-dynamic-content">

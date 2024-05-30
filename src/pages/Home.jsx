@@ -6,7 +6,36 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   const type = localStorage.getItem('type');
 
-  const classes_array = useSelector((state) => state.classesarray);
+  // const classes_array = useSelector((state) => state.classesarray);
+  const classes_array = {
+    data: [
+      {
+        name: "Yoga Class",
+        host_id: {
+          user: {
+            username: "yoga_master123"
+          }
+        }
+      },
+      {
+        name: "Pilates Workshop",
+        host_id: {
+          user: {
+            username: "pilates_pro456"
+          }
+        }
+      },
+      {
+        name: "Zumba Party",
+        host_id: {
+          user: {
+            username: "zumba_queen789"
+          }
+        }
+      }
+    ]
+  };
+  
   useEffect(()=>{
     if (sessionStorage.getItem("isReloaded") !== "true") {
       sessionStorage.setItem("isReloaded", "true");

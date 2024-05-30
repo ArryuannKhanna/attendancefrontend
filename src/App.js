@@ -46,14 +46,14 @@ function App() {
   };
 
   const RequireAuth = ({ children }) => {
-    const location = useLocation();
-    const token = localStorage.getItem("token");
+    // const location = useLocation();
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-      return <Navigate to="/login" state={{ from: location }} replace />;
-    }
+    // if (!token) {
+    //   return <Navigate to="/login" state={{ from: location }} replace />;
+    // }
 
-    return children;
+    // return children;
   };
 
   const LayoutTeacher = () => {
@@ -135,11 +135,9 @@ function App() {
     {
       path: "/",
       element: (
-        <RequireAuth>
-          {/* <StudentAccessLevel> */}
+        // <RequireAuth>
             <Layout />
-          {/* </StudentAccessLevel> */}
-        </RequireAuth>
+        // </RequireAuth>
       ),
       children: [
         {
