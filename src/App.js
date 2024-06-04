@@ -23,25 +23,25 @@ import { Navigate } from "react-router-dom";
 
 function App() {
   const StudentAccessLevel = ({ children }) => {
-    const location = useLocation();
-    const type = localStorage.getItem("type");
+    // const location = useLocation();
+    // const type = localStorage.getItem("type");
 
-    if (type !== "Student") {
-      return (
-        <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
-      );
-    }
+    // if (type !== "Student") {
+    //   return (
+    //     <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
+    //   );
+    // }
     return children;
   };
   const TeacherAccessLevel = ({ children }) => {
-    const location = useLocation();
-    const type = localStorage.getItem("type");
+  //   const location = useLocation();
+  //   const type = localStorage.getItem("type");
 
-    if (type !== "Teacher") {
-      return (
-        <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
-      );
-    }
+  //   if (type !== "Teacher") {
+  //     return (
+  //       <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
+  //     );
+  //   }
     return children;
   };
 

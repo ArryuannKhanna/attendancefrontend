@@ -45,33 +45,34 @@ const Home = () => {
   const classes_enrolled = [
     {
       name: "English",
-      code: "xyz123",
+      course_code: "xyz123",
       teacher: "Mr Sandeep"
     },
     {
       name: "Punjabi",
-      code: "127ff3",
+      course_code: "127ff3",
       teacher: "Mr Purania Singh Jathani"
     },
     {
       name: "Science",
-      code: "12uff3",
+      course_code: "12uff3",
       teacher: "Mr Jay Singh Shah"
     },
     {
       name: "German",
+      course_code: "34f3f3",
       teacher: "Mr Jayash"
     },
   ]
   return (
     <div className='Home-wrapper'>
       <div className="Home-grid">
-        {classes_array.data.map((item,index)=>(
+        {classes_enrolled.map((item,index)=>(
           <div key={index} className="grid-item">
             <div className="grid-upper">
              <Link style={{textAlign:'left'}} to={`${item.course_code}/`}><div className='grid-course-name'>{item.name}</div></Link>
               <div className='grid-course-code'>{item.course_code}</div>
-              <div className='grid-course-teacher'>{item.host_id.user.username}</div>
+              <div className='grid-course-teacher'>{item.name}</div>
             </div>
           
         </div>

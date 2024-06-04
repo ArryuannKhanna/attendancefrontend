@@ -23,7 +23,84 @@ const Classinfo = () => {
     teacher: "Gunnish",
   });
 
-  const [sessioninfo, setsessioninfo] = useState([]);
+  const [sessioninfo, setsessioninfo] = useState([
+    {
+      id: 1,
+      date: '2024-06-01',
+      present: true,
+    },
+    {
+      id: 2,
+      date: '2024-06-02',
+      present: false,
+    },
+    {
+      id: 3,
+      date: '2024-06-03',
+      present: true,
+    },
+    {
+      id: 1,
+      date: '2024-06-01',
+      present: true,
+    },
+    {
+      id: 2,
+      date: '2024-06-02',
+      present: false,
+    },
+    {
+      id: 3,
+      date: '2024-06-03',
+      present: true,
+    },
+    {
+      id: 1,
+      date: '2024-06-01',
+      present: true,
+    },
+    {
+      id: 2,
+      date: '2024-06-02',
+      present: false,
+    },
+    {
+      id: 3,
+      date: '2024-06-03',
+      present: true,
+    },
+    {
+      id: 1,
+      date: '2024-06-01',
+      present: true,
+    },
+    {
+      id: 2,
+      date: '2024-06-02',
+      present: false,
+    },
+    {
+      id: 3,
+      date: '2024-06-03',
+      present: true,
+    },
+    {
+      id: 1,
+      date: '2024-06-01',
+      present: true,
+    },
+    {
+      id: 2,
+      date: '2024-06-02',
+      present: false,
+    },
+    {
+      id: 3,
+      date: '2024-06-03',
+      present: true,
+    },
+    // Add more dummy data as needed
+  ]);
   // const [presentinfo,setpresentinfo] = useState([]);
   const [presentpercentage, setpresentpercentage] = useState(0);
   const [totalclasses, settotalclasses] = useState(0);
@@ -33,30 +110,30 @@ const Classinfo = () => {
   useEffect(() => {
     const fetchInfo = async () => {
       const token = localStorage.getItem("token");
-      const response = await fetch(
-        `http://127.0.0.1:8000/classinfo/${classid}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Token ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // const response = await fetch(
+      //   `http://127.0.0.1:8000/classinfo/${classid}`,
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       Authorization: `Token ${token}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
 
-      if (!response.ok) {
-        console.error(`The error is huge ${response.status}`);
-        return;
-      }
+      // if (!response.ok) {
+      //   console.error(`The error is huge ${response.status}`);
+      //   return;
+      // }
 
-      const data = await response.json();
+      // const data = await response.json();
 
-      setclassinfo(() => ({
-        course_code: data.course_code,
-        teacher: data.host_id.user.username,
-        name: data.name,
-      }));
-      console.log("hehe yeh le response", data);
+      // setclassinfo(() => ({
+      //   course_code: data.course_code,
+      //   teacher: data.host_id.user.username,
+      //   name: data.name,
+      // }));
+      // console.log("hehe yeh le response", data);
     };
 
     const fetchData = async () => {
@@ -108,12 +185,16 @@ const Classinfo = () => {
       }
     };
 
-    fetchData();
-    fetchInfo();
+    // fetchData();
+    // fetchInfo();
   }, [classid]); // Added classid as a dependency to useEffect
 
   const startCamera = async () => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      const videoRef = document.getElementsByClassName("hidden")[0];
+      console.log(videoRef)
+      videoRef.classList.remove("hidden");
+      videoRef.classList.add("show");
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (videoRef.current) {
@@ -162,6 +243,11 @@ const Classinfo = () => {
 
   const stopCamera = () => {
     if (videoRef.current && videoRef.current.srcObject) {
+      const videoRef = document.getElementsByClassName("hidden")[0];
+      console.log(videoRef)
+      videoRef.classList.add("hidden");
+      videoRef.classList.remove("show");
+
       const tracks = videoRef.current.srcObject.getTracks();
       tracks.forEach(track => track.stop());
       videoRef.current.srcObject = null;
@@ -279,13 +365,10 @@ const Classinfo = () => {
         ) : (
           <div className="attendance">
             <div className="classinfo-code">
-              <b>SESSION HISTORY</b>
-            </div>
-            <div className="classinfo-code">
-              <b>STUDENTS ST</b>
+              <button>SESSION HISTORY</button>
             </div>
             <div className="classinfo-code" onClick={() => { setvideosession((prev) => (!prev)); if (!videosession) handleStartsession(); fetchdata(); }}>
-              <b>START SESSION</b>
+              <button>START SESSION</button>
             </div>
           </div>
         )}
@@ -295,12 +378,14 @@ const Classinfo = () => {
             {type === 'Student' ? (<b>Sessions: </b>) : (<>{videosession === false ? (<b>Session History: </b>) : (<b>Start Session </b>)}</>)}
           </div>
           {videosession === false ?
-            (<table>
+            (<div className="history">
+
+            
+            <table>
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Date</th>
-                  {/* <th>Time</th> */}
                   {type === "Student" ? (<th>Status</th>) : (<th>Students Present</th>)}
                 </tr>
               </thead>
@@ -310,15 +395,16 @@ const Classinfo = () => {
                     <td>{index + 1}</td>
                     <td>{session.date}</td>
                     {/* <td>{session.time}</td> */}
-                    {type === 'Student' ? (<td>{session.present ? "Present" : "Absent"}</td>) : (<td>{session.students_present.length}/{session.total_students}</td>)}
+                    {/* {type === 'Student' ? (<td>{session.present ? "Present" : "Absent"}</td>) : (<td>{session.students_present.length}/{session.total_students}</td>)} */}
                     {/* <td>Present</td> */}
                   </tr>
                 ))}
               </tbody>
-            </table>) : (
+            </table>
+            </div>) : (
               <>
-                <div style={{ textAlign: 'center' }}>
-                  <video ref={videoRef} autoPlay playsInline style={{ width: '100%', maxHeight: '400px' }}></video>
+                <div className="video-container" style={{ textAlign: 'center' }}>
+                  <video ref={videoRef} autoPlay playsInline className="hidden"></video>
                   <p>WebSocket Status: {wsConnected ? "Connected" : "Disconnected"}</p>
                   {!streaming ? (
                     <button onClick={startCamera} disabled={wsConnected}>Start Camera</button>
