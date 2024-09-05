@@ -2,15 +2,16 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import "./App.css";
 import { useEffect } from "react";
 
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Header from "./components/Header";
-import Schedule from "./components/Schedule";
-import Login from "./components/Login";
-import Classinfo from "./components/Classinfo";
-import SigninS from "./components/SigninS";
-import SigninT from "./components/SigninT";
-import ErrorP from "./components/ErrorP";
+import Schedule from "./pages/Schedule";
+import Login from "./pages/Login";
+import Classinfo from "./pages/Classinfo";
+import SigninS from "./pages/Signin";
+import ErrorP from "./pages/ErrorP";
+import LandingPage from "./pages/LandingPage";
+
 
 import { fetchdata } from "./reducers/classesinfo";
 import { useLocation } from "react-router-dom";
@@ -22,37 +23,37 @@ import { Navigate } from "react-router-dom";
 
 function App() {
   const StudentAccessLevel = ({ children }) => {
-    const location = useLocation();
-    const type = localStorage.getItem("type");
+    // const location = useLocation();
+    // const type = localStorage.getItem("type");
 
-    if (type !== "Student") {
-      return (
-        <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
-      );
-    }
+    // if (type !== "Student") {
+    //   return (
+    //     <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
+    //   );
+    // }
     return children;
   };
   const TeacherAccessLevel = ({ children }) => {
-    const location = useLocation();
-    const type = localStorage.getItem("type");
+  //   const location = useLocation();
+  //   const type = localStorage.getItem("type");
 
-    if (type !== "Teacher") {
-      return (
-        <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
-      );
-    }
+  //   if (type !== "Teacher") {
+  //     return (
+  //       <Navigate to="/404_NOT_FOUND" state={{ from: location }} replace />
+  //     );
+  //   }
     return children;
   };
 
   const RequireAuth = ({ children }) => {
-    const location = useLocation();
-    const token = localStorage.getItem("token");
+    // const location = useLocation();
+    // const token = localStorage.getItem("token");
 
-    if (!token) {
-      return <Navigate to="/login" state={{ from: location }} replace />;
-    }
+    // if (!token) {
+    //   return <Navigate to="/login" state={{ from: location }} replace />;
+    // }
 
-    return children;
+    // return children;
   };
 
   const LayoutTeacher = () => {
@@ -123,7 +124,7 @@ function App() {
         <div className="Window-view-port">
           <div className="Navbar-shadow"></div>
           <div className="view-port-wrapper">
-            <Outlet />{" "}
+            <Outlet />
           </div>
         </div>
       </div>
@@ -134,11 +135,9 @@ function App() {
     {
       path: "/",
       element: (
-        <RequireAuth>
-          <StudentAccessLevel>
+        // <RequireAuth>
             <Layout />
-          </StudentAccessLevel>
-        </RequireAuth>
+        // </RequireAuth>
       ),
       children: [
         {
@@ -157,31 +156,35 @@ function App() {
       errorElement: <div>errrorr</div>,
     },
     {
+      path: "/LandingPage",
+      element: <LandingPage />,
+    },
+    {
       path: "/login",
       element: <Login />,
     },
     {
-      path: "/signupS",
+      path: "/signup",
       element: <SigninS />,
-    },
-    {
-      path: "/signupT",
-      element: <SigninT />,
     },
     {
       path: "/Teacher",
       element: (
         <RequireAuth>
-          <TeacherAccessLevel>
+          {/* <TeacherAccessLevel> */}
             <LayoutTeacher />
-          </TeacherAccessLevel>
+          {/* </TeacherAccessLevel> */}
         </RequireAuth>
       ),
       children: [
         {
-          path: "/Teacher",
+          path: "",
           element: <Home />,
         },
+        {
+          path: ":classid",
+          element: <Classinfo />
+        }
       ],
     },
     {
